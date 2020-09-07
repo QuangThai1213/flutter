@@ -1,17 +1,17 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:cowell/Container/main_page.dart';
+import 'package:cowell/Container/main_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   PageController _pageController;
 
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             setState(() => _currentIndex = index);
           },
           children: <Widget>[
-            MainPage(),
+            MainScreen(),
             Container(
               color: Colors.red,
             ),
