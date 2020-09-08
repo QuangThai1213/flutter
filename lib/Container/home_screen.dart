@@ -41,12 +41,21 @@ class _HomeScreenState extends State<HomeScreen> {
             MainScreen(),
             Container(
               color: Colors.red,
+              child: Center(
+                child: Text("Chưa phát triển"),
+              ),
             ),
             Container(
               color: Colors.green,
+              child: Center(
+                child: Text("Chưa phát triển"),
+              ),
             ),
             Container(
               color: Colors.blue,
+              child: Center(
+                child: Text("Chưa phát triển"),
+              ),
             ),
           ],
         ),
