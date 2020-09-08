@@ -4,8 +4,8 @@ import 'package:cowell/Component/summary.dart';
 import 'package:cowell/Component/separator.dart';
 
 class DetailLayout extends StatelessWidget {
-  const DetailLayout(this.pokemon);
-
+  const DetailLayout(this.pokemon, this.index);
+  final int index;
   final Pokemon pokemon;
   @override
   Widget build(BuildContext context) {
@@ -58,6 +58,7 @@ class DetailLayout extends StatelessWidget {
         children: <Widget>[
           PokemonSummary(
             pokemon,
+            index,
             horizontal: false,
           ),
           new Container(

@@ -20,7 +20,7 @@ class ItemCard extends StatelessWidget {
       child: FlatButton(
         onPressed: () {
           Navigator.pushNamed(context, '/detail',
-              arguments: DetailPageArgument(pokemon));
+              arguments: DetailPageArgument(pokemon,index));
         },
         child: Container(
           alignment: Alignment.bottomCenter,

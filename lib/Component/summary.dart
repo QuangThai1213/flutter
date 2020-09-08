@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:cowell/Model/pokemon.dart';
 import 'package:cowell/Component/separator.dart';
-import 'package:cowell/Component/detail_layout.dart';
 
 class PokemonSummary extends StatelessWidget {
   final Pokemon pokemon;
   final bool horizontal;
+  final int index;
+  PokemonSummary(this.pokemon, this.index, {this.horizontal = true});
 
-  PokemonSummary(this.pokemon, {this.horizontal = true});
-
-  PokemonSummary.vertical(this.pokemon) : horizontal = false;
+  PokemonSummary.vertical(this.pokemon, this.index) : horizontal = false;
   @override
   Widget build(BuildContext context) {
-    String imageNumber = pokemon.id.toString().padLeft(3, "0");
-    final planetThumbnail = Container(
+    String imageNumber = index.toString().padLeft(3, "0");
+    String pokemonType = "";
+    pokemon.type.asMap().forEach((index, element) {
+      if (index == 0) {
+        pokemonType = element;
+      } else {
+        pokemonType = pokemonType + " " + element;
+      }
+    });
+    final pokemonThumbnail = Container(
       margin: EdgeInsets.symmetric(vertical: 16.0),
       alignment:
           horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
@@ -27,7 +34,7 @@ class PokemonSummary extends StatelessWidget {
       ),
     );
 
-    Widget _planetValue({String value, String image}) {
+    Widget _pokemonValue({String value, String image}) {
       if (value == null) {
         value = "0";
       }
@@ -40,7 +47,7 @@ class PokemonSummary extends StatelessWidget {
       );
     }
 
-    final planetCardContent = Container(
+    final pokemonCardContent = Container(
       margin: EdgeInsets.fromLTRB(
           horizontal ? 76.0 : 16.0, horizontal ? 16.0 : 42.0, 16.0, 16.0),
       constraints: BoxConstraints.expand(),
@@ -51,14 +58,14 @@ class PokemonSummary extends StatelessWidget {
           Container(height: 4.0),
           Text(pokemon.name.english, style: TextStyle(fontSize: 20)),
           Container(height: 10.0),
-          Text(pokemon.type[1], style: TextStyle(fontStyle: FontStyle.normal)),
+          Text(pokemonType, style: TextStyle(fontStyle: FontStyle.normal)),
           Separator(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _planetValue(
+                  child: _pokemonValue(
                       value: pokemon.base.attack.toString(),
                       image: 'assets/icon/atk.png')),
               Container(
@@ -66,7 +73,7 @@ class PokemonSummary extends StatelessWidget {
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _planetValue(
+                  child: _pokemonValue(
                       value: pokemon.base.defense.toString(),
                       image: 'assets/icon/defense.png')),
               Container(
@@ -74,7 +81,7 @@ class PokemonSummary extends StatelessWidget {
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _planetValue(
+                  child: _pokemonValue(
                       value: pokemon.base.hp.toString(),
                       image: 'assets/icon/hp.png')),
               Container(
@@ -82,7 +89,7 @@ class PokemonSummary extends StatelessWidget {
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _planetValue(
+                  child: _pokemonValue(
                       value: pokemon.base.sp_attack.toString(),
                       image: 'assets/icon/atk.png')),
               Container(
@@ -90,7 +97,7 @@ class PokemonSummary extends StatelessWidget {
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _planetValue(
+                  child: _pokemonValue(
                       value: pokemon.base.sp_defense.toString(),
                       image: 'assets/icon/resistance.png'))
             ],
@@ -99,8 +106,8 @@ class PokemonSummary extends StatelessWidget {
       ),
     );
 
-    final planetCard = Container(
-      child: planetCardContent,
+    final pokemonCard = Container(
+      child: pokemonCardContent,
       height: horizontal ? 124.0 : 154.0,
       margin:
           horizontal ? EdgeInsets.only(left: 46.0) : EdgeInsets.only(top: 72.0),
@@ -118,28 +125,17 @@ class PokemonSummary extends StatelessWidget {
       ),
     );
 
-    return GestureDetector(
-        onTap: horizontal
-            ? () => Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => DetailLayout(pokemon),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) =>
-                            FadeTransition(opacity: animation, child: child),
-                  ),
-                )
-            : null,
-        child: Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 16.0,
-            horizontal: 24.0,
-          ),
-          child: Stack(
-            children: <Widget>[
-              planetCard,
-              planetThumbnail,
-            ],
-          ),
-        ));
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 24.0,
+      ),
+      child: Stack(
+        children: <Widget>[
+          pokemonCard,
+          pokemonThumbnail,
+        ],
+      ),
+    );
   }
 }
