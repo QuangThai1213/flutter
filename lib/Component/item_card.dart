@@ -1,27 +1,33 @@
-import 'package:cowell/Component/detail_item.dart';
+import 'package:cowell/Container/detail_screen.dart';
+import 'package:cowell/Model/pokemon.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
   final int index;
   final String backgroundImage;
+  final Pokemon pokemon;
   const ItemCard(
     this.index,
     this.backgroundImage,
+    this.pokemon,
   );
 
   @override
   Widget build(BuildContext context) {
-    List<Color> colors = [Colors.deepOrange, Colors.yellow];
+    List<Color> colors = [Colors.blueAccent, Colors.yellow];
     List<double> stops = [0.0, 0.7];
     return Container(
       child: FlatButton(
         onPressed: () {
           Navigator.pushNamed(context, '/detail',
-              arguments: DetailPageArgument(index));
+              arguments: DetailPageArgument(pokemon));
         },
-        child: null,
+        child: Container(
+          alignment: Alignment.bottomCenter,
+          child: Text(pokemon.name.english),
+        ),
       ),
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.contain,

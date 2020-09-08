@@ -1,6 +1,5 @@
 import 'package:cowell/Component/grid_news_item.dart';
 import 'package:cowell/Model/pokemon.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -19,7 +18,7 @@ class GridLayoutNews extends StatelessWidget {
     return SafeArea(
       child: AnimationLimiter(
         child: GridView.count(
-          childAspectRatio: 0.8,
+          childAspectRatio: 0.7,
           crossAxisCount: columnCount,
           children: lstWidget,
         ),
