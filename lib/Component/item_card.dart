@@ -1,7 +1,6 @@
 import 'package:cowell/Component/detail_item.dart';
 import 'package:flutter/material.dart';
 
-
 class ItemCard extends StatelessWidget {
   final int index;
   final String backgroundImage;
@@ -12,6 +11,8 @@ class ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Color> colors = [Colors.deepOrange, Colors.yellow];
+    List<double> stops = [0.0, 0.7];
     return Container(
       child: FlatButton(
         onPressed: () {
@@ -23,10 +24,13 @@ class ItemCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.cover,
+          fit: BoxFit.contain,
           image: AssetImage(backgroundImage),
         ),
-        color: Colors.white,
+        gradient: LinearGradient(
+          colors: colors,
+          stops: stops,
+        ),
         borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
