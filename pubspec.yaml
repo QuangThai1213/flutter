@@ -21,4 +21,5 @@ flutter:
     - assets/data/pokedex.json
     - assets/images/
     - assets/icon/
+    - assets/excel/
 

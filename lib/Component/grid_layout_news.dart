@@ -8,7 +8,7 @@ class GridLayoutNews extends StatelessWidget {
 
   final columnCount = 3;
   final List<Pokemon> lstPokemon;
-  
+
   @override
   Widget build(BuildContext context) {
     List<Widget> lstWidget = [];
@@ -18,6 +18,7 @@ class GridLayoutNews extends StatelessWidget {
     return SafeArea(
       child: AnimationLimiter(
         child: GridView.count(
+          padding: EdgeInsets.only(top: 40),
           childAspectRatio: 0.7,
           crossAxisCount: columnCount,
           children: lstWidget,

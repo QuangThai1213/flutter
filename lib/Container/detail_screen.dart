@@ -14,10 +14,12 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DetailPageArgument args = ModalRoute.of(context).settings.arguments;
-    print(args.pokemon.name.english);
     return Container(
       child: Scaffold(
-        appBar: AppBar(title: Text("Detail")),
+        appBar: AppBar(
+          title: Text("Detail"),
+          centerTitle: true,
+        ),
         body: DetailLayout(args.pokemon, args.index),
       ),
     );
