@@ -22,11 +22,21 @@ class Operator {
   final List<Skills> skills;
   final List<Talents> talents;
   final List<PotentialRank> potentialRank;
-  
+
   factory Operator.fromJson(Map<String, dynamic> json) {
     return Operator(
       name: json['name'],
       description: json['description'],
+    );
+  }
+}
+
+class Trait {
+  Trait({this.candidates});
+  final List<Candidates> candidates;
+  factory Trait.fromJson(Map<String, dynamic> json) {
+    return Trait(
+      candidates: json['candidates'],
     );
   }
 }
