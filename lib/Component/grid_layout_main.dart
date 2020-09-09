@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 List<StaggeredTile> _staggeredTiles = const <StaggeredTile>[
   const StaggeredTile.count(3, 2),
@@ -104,6 +105,7 @@ class _GridLayoutTile extends StatelessWidget {
         children: [
           CarouselSlider(
             options: CarouselOptions(
+              initialPage: rn.nextInt(2),
               height: height,
               viewportFraction: 1.0,
               enlargeCenterPage: false,
@@ -119,6 +121,13 @@ class _GridLayoutTile extends StatelessWidget {
                         fit: BoxFit.cover,
                         height: height,
                         width: width,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                            child: SpinKitPouringHourglass(color: Colors.blue),
+                          );
+                        },
                       )),
                     ))
                 .toList(),
@@ -135,7 +144,7 @@ class _GridLayoutTile extends StatelessWidget {
                     children: [
                       Icon(
                         iconData,
-                        color: Colors.white,
+                        color: Colors.deepPurpleAccent,
                       ),
                       Text(
                         title,

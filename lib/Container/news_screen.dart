@@ -5,6 +5,7 @@ import 'package:cowell/Component/search.dart';
 import 'package:cowell/Model/pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class NewsScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ Future<List<Pokemon>> fetchPokemon() async {
 class _NewsScreenState extends State<NewsScreen> {
   Future<List<Pokemon>> futurePokemon;
   List<String> lstPokemonName = [];
-  List<Pokemon> lstPokemon = [];
+  List<Pokemon> lstPokemonInit = [];
   List<Pokemon> lstPokemonSearch = [];
   String title = "News";
   bool isFetched = false;
@@ -43,7 +44,7 @@ class _NewsScreenState extends State<NewsScreen> {
 
   changeListData(String dataReturn) {
     List<Pokemon> data = [];
-    data.addAll(lstPokemon.where((element) =>
+    data.addAll(lstPokemonInit.where((element) =>
         element.name.english.toLowerCase().contains(dataReturn.toLowerCase())));
     setState(() {
       lstPokemonSearch = data;
@@ -81,11 +82,11 @@ class _NewsScreenState extends State<NewsScreen> {
           if (snapshot.hasData) {
             lstPokemonName.addAll(snapshot.data.map((e) => e.name.english));
             if (!isFetched) {
-              lstPokemon = snapshot.data;
-              lstPokemonSearch = lstPokemon;
+              lstPokemonInit = snapshot.data;
+              lstPokemonSearch = lstPokemonInit;
               isFetched = true;
             }
-            if (lstPokemon.isNotEmpty) {
+            if (lstPokemonSearch.isNotEmpty) {
               return GridLayoutNews(lstPokemonSearch);
             } else {
               return Text("Nothing Here !");
@@ -94,7 +95,7 @@ class _NewsScreenState extends State<NewsScreen> {
             return Text("${snapshot.error}");
           }
           // By default, show a loading spinner.
-          return new Center(child: new CircularProgressIndicator());
+          return Center(child: SpinKitPouringHourglass(color: Colors.blue));
         },
       ),
     );
