@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:cowell/Component/grid_layout_news.dart';
 import 'package:cowell/Component/search.dart';
+import 'package:cowell/Model/operator.dart';
 import 'package:cowell/Model/pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +17,19 @@ Future<List<Pokemon>> fetchPokemon() async {
   String response = await rootBundle.loadString("assets/data/pokedex.json");
   List responseJson = json.decode(response);
   return responseJson.map((m) => new Pokemon.fromJson(m)).toList();
+}
+
+Future<void> printData() async {
+  List<Operator> lstOperator = [];
+  final response =
+      await rootBundle.loadString("assets/excel/character_table.json");
+  final decoded = jsonDecode(response) as Map;
+  for (final operatorData in decoded.values) {
+    lstOperator.add(new Operator.fromJson(operatorData));
+  }
+  lstOperator.forEach((element) {
+    print(element.name);
+  });
 }
 
 class _NewsScreenState extends State<NewsScreen> {
@@ -62,6 +76,8 @@ class _NewsScreenState extends State<NewsScreen> {
         changeListData(result);
       }
     }
+
+    printData();
 
     return Scaffold(
       appBar: AppBar(
