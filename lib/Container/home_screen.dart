@@ -72,15 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.home),
               inactiveColor: Colors.grey),
           BottomNavyBarItem(
-              title: Text('Item One'),
+              title: Text('????'),
               icon: Icon(Icons.apps),
               inactiveColor: Colors.grey),
           BottomNavyBarItem(
-              title: Text('Item One'),
+              title: Text('????'),
               icon: Icon(Icons.chat_bubble),
               inactiveColor: Colors.grey),
           BottomNavyBarItem(
-              title: Text('Item One'),
+              title: Text('????'),
               icon: Icon(Icons.settings),
               inactiveColor: Colors.grey),
         ],
