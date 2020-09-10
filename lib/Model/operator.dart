@@ -18,6 +18,10 @@ class Operator {
     this.rarity,
     this.profession,
     this.trait,
+    this.phases,
+    this.skills,
+    this.talents,
+    this.potentialRanks,
   });
   final String name;
   final String description;
@@ -37,14 +41,17 @@ class Operator {
   final int rarity;
   final String profession;
   final Trait trait;
-  // final List<Phases> phases;
-  // final List<Skills> skills;
-  // final List<Talents> talents;
-  // final List<PotentialRank> potentialRank;
+  final List<Phases> phases;
+  final List<Skills> skills;
+  final List<Talents> talents;
+  final List<PotentialRank> potentialRanks;
 
   factory Operator.fromJson(Map<String, dynamic> json) {
     var tagList = [];
     var trait;
+    var jsonSkills = json['skills'] as List;
+    var jsonTalents = json['talents'] as List;
+     var jsonPotentialRanks = json['talents'] as List;
     if (json['tagList'] == null) {
       tagList = [];
     } else {
@@ -54,25 +61,97 @@ class Operator {
       trait = Trait.fromJson(json['trait']);
     }
 
+    List<Skills> lstSkills = jsonSkills.map((e) => Skills.fromJson(e)).toList();
+    List<Talents> lstTalents = [];
+    if (jsonTalents != null) {
+      lstTalents = jsonTalents.map((e) => Talents.fromJson(e)).toList();
+    }
+     List<Skills> lstSkills = jsonSkills.map((e) => Skills.fromJson(e)).toList();
     return Operator(
-      name: json['name'],
+        name: json['name'],
+        description: json['description'],
+        canUseGeneralPotentialItem: json['canUseGeneralPotentialItem'],
+        potentialItemId: json['potentialItemId'],
+        team: json['team'],
+        displayNumber: json['displayNumber'],
+        tokenKey: json['tokenKey'],
+        appellation: json['appellation'],
+        position: json['position'],
+        tagList: tagList.cast<String>(),
+        displayLogo: json['displayLogo'],
+        itemUsage: json['itemUsage'],
+        itemDesc: json['itemDesc'],
+        itemObtainApproach: json['itemObtainApproach'],
+        maxPotentialLevel: json['maxPotentialLevel'],
+        rarity: json['rarity'],
+        profession: json['profession'],
+        trait: trait,
+        skills: lstSkills,
+        talents: lstTalents,
+        potentialRanks: PotentialRank.fromJson(json['potentialRanks']));
+  }
+}
+
+class PotentialRank {
+  PotentialRank({this.type, this.description, this.equivalentCost});
+  final int type;
+  final String description;
+  final String equivalentCost;
+
+  factory PotentialRank.fromJson(Map<String, dynamic> json) {
+    return PotentialRank(
+      type: json['type'],
       description: json['description'],
-      canUseGeneralPotentialItem: json['canUseGeneralPotentialItem'],
-      potentialItemId: json['potentialItemId'],
-      team: json['team'],
-      displayNumber: json['displayNumber'],
-      tokenKey: json['tokenKey'],
-      appellation: json['appellation'],
-      position: json['position'],
-      tagList: tagList.cast<String>(),
-      displayLogo: json['displayLogo'],
-      itemUsage: json['itemUsage'],
-      itemDesc: json['itemDesc'],
-      itemObtainApproach: json['itemObtainApproach'],
-      maxPotentialLevel: json['maxPotentialLevel'],
-      rarity: json['rarity'],
-      profession: json['profession'],
-      trait: trait,
+      equivalentCost: json['equivalentCost'],
+    );
+  }
+}
+
+class Talents {
+  Talents({this.candidates});
+  final List<CandidatesTalents> candidates;
+  factory Talents.fromJson(Map<String, dynamic> json) {
+    var jsonCandidates = json['candidates'] as List;
+    List<CandidatesTalents> lstCandidates = [];
+    if (jsonCandidates != null) {
+      lstCandidates =
+          jsonCandidates.map((e) => CandidatesTalents.fromJson(e)).toList();
+    }
+    return Talents(
+      candidates: lstCandidates,
+    );
+  }
+}
+
+class CandidatesTalents {
+  CandidatesTalents({
+    this.unlockCondition,
+    this.requiredPotentialRank,
+    this.blackboard,
+    this.descripton,
+    this.prefabKey,
+    this.rangeId,
+    this.name,
+  });
+  final Condition unlockCondition;
+  final int requiredPotentialRank;
+  final List<KeyValue> blackboard;
+  final String descripton;
+  final String prefabKey;
+  final String rangeId;
+  final String name;
+  factory CandidatesTalents.fromJson(Map<String, dynamic> json) {
+    var jsonBlackboard = json['blackboard'] as List;
+    List<KeyValue> lstBlackboard =
+        jsonBlackboard.map((e) => KeyValue.fromJson(e)).toList();
+    return CandidatesTalents(
+      unlockCondition: Condition.fromJson(json['unlockCondition']),
+      requiredPotentialRank: json['requiredPotentialRank'],
+      blackboard: lstBlackboard,
+      descripton: json['descripton'],
+      prefabKey: json['prefabKey'],
+      rangeId: json['rangeId'],
+      name: json['name'],
     );
   }
 }
@@ -90,30 +169,47 @@ class Skills {
   final List<LevelUpCostCond> levelUpCostCond;
   final Condition unlockCond;
   factory Skills.fromJson(Map<String, dynamic> json) {
+    var jsonLevelUpCostCond = json['levelUpCostCond'] as List;
+    List<LevelUpCostCond> lstLevelUpCostCond =
+        jsonLevelUpCostCond.map((e) => LevelUpCostCond.fromJson(e)).toList();
     return Skills(
       skillId: json['skillId'],
       overridePrefabKey: json['overridePrefabKey'],
       overrideTokenKey: json['overrideTokenKey'],
-      levelUpCostCond: json['levelUpCostCond'],
-      unlockCond: json['unlockCond'],
+      levelUpCostCond: lstLevelUpCostCond,
+      unlockCond: Condition.fromJson(json['unlockCond']),
     );
   }
 }
 
 class LevelUpCostCond {
-  LevelUpCostCond(this.unlockCond, this.lvlUpTime, this.levelUpCost);
+  LevelUpCostCond({this.unlockCond, this.lvlUpTime, this.levelUpCost});
   final Condition unlockCond;
   final int lvlUpTime;
   final List<Material> levelUpCost;
+  factory LevelUpCostCond.fromJson(Map<String, dynamic> json) {
+    var jsonLevelUpCost = json['candidates'] as List;
+    List<Material> lstLevelUpCost = [];
+    if (jsonLevelUpCost != null) {
+      lstLevelUpCost =
+          jsonLevelUpCost.map((e) => Material.fromJson(e)).toList();
+    }
+
+    return LevelUpCostCond(
+      unlockCond: Condition.fromJson(json['unlockCond']),
+      lvlUpTime: json['lvlUpTime'],
+      levelUpCost: lstLevelUpCost,
+    );
+  }
 }
 
 class Trait {
   Trait({this.candidates});
-  final List<Candidates> candidates;
+  final List<CandidatesTrait> candidates;
   factory Trait.fromJson(Map<String, dynamic> json) {
     var jsonCandidates = json['candidates'] as List;
-    List<Candidates> lstCandidates =
-        jsonCandidates.map((e) => Candidates.fromJson(e)).toList();
+    List<CandidatesTrait> lstCandidates =
+        jsonCandidates.map((e) => CandidatesTrait.fromJson(e)).toList();
     return Trait(
       candidates: lstCandidates,
     );
@@ -144,8 +240,8 @@ class Condition {
   }
 }
 
-class Candidates {
-  Candidates(
+class CandidatesTrait {
+  CandidatesTrait(
       {this.unlockCondition,
       this.requiredPotentialRank,
       this.blackboard,
@@ -158,11 +254,11 @@ class Candidates {
   final String overrideDescripton;
   final String prefabKey;
   final String rangeId;
-  factory Candidates.fromJson(Map<String, dynamic> json) {
+  factory CandidatesTrait.fromJson(Map<String, dynamic> json) {
     var jsonBlackboard = json['blackboard'] as List;
     List<KeyValue> lstBlackboard =
         jsonBlackboard.map((e) => KeyValue.fromJson(e)).toList();
-    return Candidates(
+    return CandidatesTrait(
       unlockCondition: Condition.fromJson(json['unlockCondition']),
       requiredPotentialRank: json['requiredPotentialRank'],
       blackboard: lstBlackboard,

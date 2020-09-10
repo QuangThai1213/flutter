@@ -28,9 +28,9 @@ Future<void> printData() async {
     lstOperator.add(new Operator.fromJson(operatorData));
   }
   lstOperator.forEach((element) {
-       if(element.trait != null){
-         print(element.trait.candidates[0].overrideDescripton);
-       }
+    if (element.talents != null) {
+        print(element.talents);
+    }
   });
 }
 

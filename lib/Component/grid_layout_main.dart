@@ -125,7 +125,7 @@ class _GridLayoutTile extends StatelessWidget {
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null) return child;
                           return Center(
-                            child: SpinKitPouringHourglass(color: Colors.blue),
+                            child: SpinKitCubeGrid(color: Colors.blue),
                           );
                         },
                       )),

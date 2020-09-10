@@ -11,7 +11,6 @@ class ItemCard extends StatelessWidget {
     this.backgroundImage,
     this.pokemon,
   );
-
   @override
   Widget build(BuildContext context) {
     List<Color> colors = [Colors.blueAccent, Colors.yellow];
@@ -49,3 +48,5 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
+
+
