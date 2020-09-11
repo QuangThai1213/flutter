@@ -44,14 +44,14 @@ class Operator {
   final List<Phases> phases;
   final List<Skills> skills;
   final List<Talents> talents;
-  final List<PotentialRank> potentialRanks;
+  final List<PotentialRanks> potentialRanks;
 
   factory Operator.fromJson(Map<String, dynamic> json) {
     var tagList = [];
     var trait;
     var jsonSkills = json['skills'] as List;
     var jsonTalents = json['talents'] as List;
-     var jsonPotentialRanks = json['talents'] as List;
+    var jsonPotentialRanks = json['potentialRanks'] as List;
     if (json['tagList'] == null) {
       tagList = [];
     } else {
@@ -66,40 +66,42 @@ class Operator {
     if (jsonTalents != null) {
       lstTalents = jsonTalents.map((e) => Talents.fromJson(e)).toList();
     }
-     List<Skills> lstSkills = jsonSkills.map((e) => Skills.fromJson(e)).toList();
+    List<PotentialRanks> lstPotentialRanks =
+        jsonPotentialRanks.map((e) => PotentialRanks.fromJson(e)).toList();
     return Operator(
-        name: json['name'],
-        description: json['description'],
-        canUseGeneralPotentialItem: json['canUseGeneralPotentialItem'],
-        potentialItemId: json['potentialItemId'],
-        team: json['team'],
-        displayNumber: json['displayNumber'],
-        tokenKey: json['tokenKey'],
-        appellation: json['appellation'],
-        position: json['position'],
-        tagList: tagList.cast<String>(),
-        displayLogo: json['displayLogo'],
-        itemUsage: json['itemUsage'],
-        itemDesc: json['itemDesc'],
-        itemObtainApproach: json['itemObtainApproach'],
-        maxPotentialLevel: json['maxPotentialLevel'],
-        rarity: json['rarity'],
-        profession: json['profession'],
-        trait: trait,
-        skills: lstSkills,
-        talents: lstTalents,
-        potentialRanks: PotentialRank.fromJson(json['potentialRanks']));
+      name: json['name'],
+      description: json['description'],
+      canUseGeneralPotentialItem: json['canUseGeneralPotentialItem'],
+      potentialItemId: json['potentialItemId'],
+      team: json['team'],
+      displayNumber: json['displayNumber'],
+      tokenKey: json['tokenKey'],
+      appellation: json['appellation'],
+      position: json['position'],
+      tagList: tagList.cast<String>(),
+      displayLogo: json['displayLogo'],
+      itemUsage: json['itemUsage'],
+      itemDesc: json['itemDesc'],
+      itemObtainApproach: json['itemObtainApproach'],
+      maxPotentialLevel: json['maxPotentialLevel'],
+      rarity: json['rarity'],
+      profession: json['profession'],
+      trait: trait,
+      skills: lstSkills,
+      talents: lstTalents,
+      potentialRanks: lstPotentialRanks,
+    );
   }
 }
 
-class PotentialRank {
-  PotentialRank({this.type, this.description, this.equivalentCost});
+class PotentialRanks {
+  PotentialRanks({this.type, this.description, this.equivalentCost});
   final int type;
   final String description;
   final String equivalentCost;
 
-  factory PotentialRank.fromJson(Map<String, dynamic> json) {
-    return PotentialRank(
+  factory PotentialRanks.fromJson(Map<String, dynamic> json) {
+    return PotentialRanks(
       type: json['type'],
       description: json['description'],
       equivalentCost: json['equivalentCost'],
