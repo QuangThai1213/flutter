@@ -1,40 +1,41 @@
+import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
-import 'package:cowell/Model/pokemon.dart';
 import 'package:cowell/Component/separator.dart';
 
-class PokemonSummary extends StatelessWidget {
-  final Pokemon pokemon;
+class OperatorSummary extends StatelessWidget {
+  final Operator operator;
   final bool horizontal;
   final int index;
-  PokemonSummary(this.pokemon, this.index, {this.horizontal = true});
+  OperatorSummary(this.operator, this.index, {this.horizontal = true});
 
-  PokemonSummary.vertical(this.pokemon, this.index) : horizontal = false;
+  OperatorSummary.vertical(this.operator, this.index) : horizontal = false;
   @override
   Widget build(BuildContext context) {
     String imageNumber = index.toString().padLeft(3, "0");
-    String pokemonType = "";
-    pokemon.type.asMap().forEach((index, element) {
+    String operatorType = "";
+    operator.tagList.asMap().forEach((index, element) {
       if (index == 0) {
-        pokemonType = element;
+        operatorType = element;
       } else {
-        pokemonType = pokemonType + " " + element;
+        operatorType = operatorType + " " + element;
       }
     });
-    final pokemonThumbnail = Container(
+    String image = operator.phases.last.characterPrefabKey;
+    final operatorThumbnail = Container(
       margin: EdgeInsets.symmetric(vertical: 16.0),
       alignment:
           horizontal ? FractionalOffset.centerLeft : FractionalOffset.center,
       child: Hero(
-        tag: "${pokemon.id}",
+        tag: index,
         child: Image(
-          image: AssetImage("assets/images/$imageNumber.png"),
+          image: AssetImage("assets/img/avatars/$image.png"),
           height: 92.0,
           width: 92.0,
         ),
       ),
     );
 
-    Widget _pokemonValue({String value, String image}) {
+    Widget _operatorValue({String value, String image}) {
       if (value == null) {
         value = "0";
       }
@@ -47,7 +48,7 @@ class PokemonSummary extends StatelessWidget {
       );
     }
 
-    final pokemonCardContent = Container(
+    final operatorCardContent = Container(
       margin: EdgeInsets.fromLTRB(
           horizontal ? 76.0 : 16.0, horizontal ? 16.0 : 42.0, 16.0, 16.0),
       constraints: BoxConstraints.expand(),
@@ -56,49 +57,49 @@ class PokemonSummary extends StatelessWidget {
             horizontal ? CrossAxisAlignment.start : CrossAxisAlignment.center,
         children: <Widget>[
           Container(height: 4.0),
-          Text(pokemon.name.english, style: TextStyle(fontSize: 20)),
+          Text(operator.name, style: TextStyle(fontSize: 20)),
           Container(height: 10.0),
-          Text(pokemonType, style: TextStyle(fontStyle: FontStyle.normal)),
+          Text(operatorType, style: TextStyle(fontStyle: FontStyle.normal)),
           Separator(),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _pokemonValue(
-                      value: pokemon.base.attack.toString(),
+                  child: _operatorValue(
+                      value: operator
+                          .phases.last.attributesKeyFrames.last.data.atk
+                          .toString(),
                       image: 'assets/icon/atk.png')),
               Container(
                 width: horizontal ? 8.0 : 10.0,
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _pokemonValue(
-                      value: pokemon.base.defense.toString(),
+                  child: _operatorValue(
+                      value: operator
+                          .phases.last.attributesKeyFrames.last.data.def
+                          .toString(),
                       image: 'assets/icon/defense.png')),
               Container(
                 width: horizontal ? 8.0 : 10.0,
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _pokemonValue(
-                      value: pokemon.base.hp.toString(),
+                  child: _operatorValue(
+                      value: operator
+                          .phases.last.attributesKeyFrames.last.data.maxHp
+                          .toString(),
                       image: 'assets/icon/hp.png')),
               Container(
                 width: horizontal ? 8.0 : 10.0,
               ),
               Expanded(
                   flex: horizontal ? 1 : 0,
-                  child: _pokemonValue(
-                      value: pokemon.base.sp_attack.toString(),
-                      image: 'assets/icon/atk.png')),
-              Container(
-                width: horizontal ? 8.0 : 10.0,
-              ),
-              Expanded(
-                  flex: horizontal ? 1 : 0,
-                  child: _pokemonValue(
-                      value: pokemon.base.sp_defense.toString(),
+                  child: _operatorValue(
+                      value: operator.phases.last.attributesKeyFrames.last.data
+                          .magicResistance
+                          .toString(),
                       image: 'assets/icon/resistance.png'))
             ],
           ),
@@ -106,8 +107,8 @@ class PokemonSummary extends StatelessWidget {
       ),
     );
 
-    final pokemonCard = Container(
-      child: pokemonCardContent,
+    final operatorCard = Container(
+      child: operatorCardContent,
       height: horizontal ? 124.0 : 154.0,
       margin:
           horizontal ? EdgeInsets.only(left: 46.0) : EdgeInsets.only(top: 72.0),
@@ -132,8 +133,8 @@ class PokemonSummary extends StatelessWidget {
       ),
       child: Stack(
         children: <Widget>[
-          pokemonCard,
-          pokemonThumbnail,
+          operatorCard,
+          operatorThumbnail,
         ],
       ),
     );

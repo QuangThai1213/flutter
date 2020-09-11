@@ -1,19 +1,19 @@
 import 'package:cowell/Component/grid_news_item.dart';
-import 'package:cowell/Model/pokemon.dart';
+import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class GridLayoutNews extends StatelessWidget {
-  GridLayoutNews(this.lstPokemon);
+  GridLayoutNews(this.lstOperator);
 
   final columnCount = 3;
-  final List<Pokemon> lstPokemon;
+  final List<Operator> lstOperator;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> lstWidget = [];
-    lstPokemon.forEach((element) {
-      lstWidget.add(GridNewsItem(columnCount, element.id, element));
+    lstOperator.asMap().forEach((index, element) {
+      lstWidget.add(GridNewsItem(columnCount, index, element));
     });
     return SafeArea(
       child: AnimationLimiter(

@@ -1,15 +1,15 @@
 import 'package:cowell/Container/detail_screen.dart';
-import 'package:cowell/Model/pokemon.dart';
+import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
   final int index;
   final String backgroundImage;
-  final Pokemon pokemon;
+  final Operator operator;
   const ItemCard(
     this.index,
     this.backgroundImage,
-    this.pokemon,
+    this.operator,
   );
   @override
   Widget build(BuildContext context) {
@@ -19,17 +19,22 @@ class ItemCard extends StatelessWidget {
       child: FlatButton(
         onPressed: () {
           Navigator.pushNamed(context, '/detail',
-              arguments: DetailPageArgument(pokemon,index));
+              arguments: DetailPageArgument(operator, index));
         },
         child: Container(
           alignment: Alignment.bottomCenter,
-          child: Text(pokemon.name.english),
+          child: Text(
+            operator.name,
+            style: TextStyle(
+              color: Colors.amber,
+            ),
+          ),
         ),
       ),
       margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       decoration: BoxDecoration(
         image: DecorationImage(
-          fit: BoxFit.contain,
+          fit: BoxFit.fitWidth,
           image: AssetImage(backgroundImage),
         ),
         gradient: LinearGradient(
@@ -39,7 +44,7 @@ class ItemCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(4.0)),
         boxShadow: <BoxShadow>[
           BoxShadow(
-            color: Colors.black12,
+            color: Colors.deepOrange,
             blurRadius: 4.0,
             offset: const Offset(0.0, 4.0),
           ),
@@ -48,5 +53,3 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
-
-

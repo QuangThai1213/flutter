@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cowell/Component/grid_layout_news.dart';
 import 'package:cowell/Component/search.dart';
 import 'package:cowell/Model/operator.dart';
-import 'package:cowell/Model/pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,13 +12,7 @@ class NewsScreen extends StatefulWidget {
   _NewsScreenState createState() => _NewsScreenState();
 }
 
-Future<List<Pokemon>> fetchPokemon() async {
-  String response = await rootBundle.loadString("assets/data/pokedex.json");
-  List responseJson = json.decode(response);
-  return responseJson.map((m) => new Pokemon.fromJson(m)).toList();
-}
-
-Future<void> printData() async {
+Future<List<Operator>> fetchOperator() async {
   List<Operator> lstOperator = [];
   final response =
       await rootBundle.loadString("assets/excel/character_table.json");
@@ -27,24 +20,20 @@ Future<void> printData() async {
   for (final operatorData in decoded.values) {
     lstOperator.add(new Operator.fromJson(operatorData));
   }
-  lstOperator.forEach((element) {
-    if (element.talents != null) {
-        print(element.talents);
-    }
-  });
+  return lstOperator;
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  Future<List<Pokemon>> futurePokemon;
-  List<String> lstPokemonName = [];
-  List<Pokemon> lstPokemonInit = [];
-  List<Pokemon> lstPokemonSearch = [];
+  Future<List<Operator>> futureOperator;
+  List<String> lstOperatorName = [];
+  List<Operator> lstOperatorInit = [];
+  List<Operator> lstOperatorSearch = [];
   String title = "News";
   bool isFetched = false;
   @override
   void initState() {
     super.initState();
-    futurePokemon = fetchPokemon();
+    futureOperator = fetchOperator();
   }
 
   changeStatusTitle(String newTitle) {
@@ -54,16 +43,16 @@ class _NewsScreenState extends State<NewsScreen> {
   }
 
   addRecentSearch(String recent) {
-    lstPokemonName.removeWhere((item) => item == recent);
-    lstPokemonName.insert(0, recent);
+    lstOperatorName.removeWhere((item) => item == recent);
+    lstOperatorName.insert(0, recent);
   }
 
   changeListData(String dataReturn) {
-    List<Pokemon> data = [];
-    data.addAll(lstPokemonInit.where((element) =>
-        element.name.english.toLowerCase().contains(dataReturn.toLowerCase())));
+    List<Operator> data = [];
+    data.addAll(lstOperatorInit.where((element) =>
+        element.name.toLowerCase().contains(dataReturn.toLowerCase())));
     setState(() {
-      lstPokemonSearch = data;
+      lstOperatorSearch = data;
     });
   }
 
@@ -71,15 +60,13 @@ class _NewsScreenState extends State<NewsScreen> {
   Widget build(BuildContext context) {
     waitForShowSearch() async {
       final result =
-          await showSearch(context: context, delegate: Search(lstPokemonName));
+          await showSearch(context: context, delegate: Search(lstOperatorName));
       if (result != "") {
         // changeStatusTitle(result);
         addRecentSearch(result);
         changeListData(result);
       }
     }
-
-    printData();
 
     return Scaffold(
       appBar: AppBar(
@@ -94,18 +81,18 @@ class _NewsScreenState extends State<NewsScreen> {
         title: Text(title),
         centerTitle: true,
       ),
-      body: FutureBuilder<List<Pokemon>>(
-        future: futurePokemon,
+      body: FutureBuilder<List<Operator>>(
+        future: futureOperator,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            lstPokemonName.addAll(snapshot.data.map((e) => e.name.english));
+            lstOperatorName.addAll(snapshot.data.map((e) => e.name));
             if (!isFetched) {
-              lstPokemonInit = snapshot.data;
-              lstPokemonSearch = lstPokemonInit;
+              lstOperatorInit = snapshot.data;
+              lstOperatorSearch = lstOperatorInit;
               isFetched = true;
             }
-            if (lstPokemonSearch.isNotEmpty) {
-              return GridLayoutNews(lstPokemonSearch);
+            if (lstOperatorSearch.isNotEmpty) {
+              return GridLayoutNews(lstOperatorSearch);
             } else {
               return Text("Nothing Here !");
             }

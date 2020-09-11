@@ -49,6 +49,7 @@ class Operator {
   factory Operator.fromJson(Map<String, dynamic> json) {
     var tagList = [];
     var trait;
+    var jsonPhases = json['phases'] as List;
     var jsonSkills = json['skills'] as List;
     var jsonTalents = json['talents'] as List;
     var jsonPotentialRanks = json['potentialRanks'] as List;
@@ -68,6 +69,7 @@ class Operator {
     }
     List<PotentialRanks> lstPotentialRanks =
         jsonPotentialRanks.map((e) => PotentialRanks.fromJson(e)).toList();
+    List<Phases> lstPhases = jsonPhases.map((e) => Phases.fromJson(e)).toList();
     return Operator(
       name: json['name'],
       description: json['description'],
@@ -86,6 +88,7 @@ class Operator {
       maxPotentialLevel: json['maxPotentialLevel'],
       rarity: json['rarity'],
       profession: json['profession'],
+      phases: lstPhases,
       trait: trait,
       skills: lstSkills,
       talents: lstTalents,
@@ -285,12 +288,21 @@ class Phases {
   final List<Material> evolveCost;
 
   factory Phases.fromJson(Map<String, dynamic> json) {
+    var jsonAttributesKeyFrames = json['attributesKeyFrames'] as List;
+    var jsonMaterial = json['evolveCost'] as List;
+    List<AttributesKeyFrames> lstAttributesKeyFrames =
+        jsonAttributesKeyFrames.map((e) => AttributesKeyFrames.fromJson(e)).toList();
+    List<Material> lstMaterial = [];
+    if (jsonMaterial != null) {
+      lstMaterial = jsonMaterial.map((e) => Material.fromJson(e)).toList();
+    }
+
     return Phases(
       characterPrefabKey: json['characterPrefabKey'],
       rangeId: json['rangeId'],
       maxLevel: json['maxLevel'],
-      attributesKeyFrames: json['attributesKeyFrames'],
-      evolveCost: json['evolveCost'],
+      attributesKeyFrames: lstAttributesKeyFrames,
+      evolveCost: lstMaterial,
     );
   }
 }
@@ -316,7 +328,7 @@ class AttributesKeyFrames {
   factory AttributesKeyFrames.fromJson(Map<String, dynamic> json) {
     return AttributesKeyFrames(
       level: json['level'],
-      data: json['data'],
+      data: Data.fromJson(json['data']),
     );
   }
 }
@@ -346,15 +358,15 @@ class Data {
   final int maxHp;
   final int atk;
   final int def;
-  final int magicResistance;
+  final double magicResistance;
   final int cost;
   final int blockCnt;
-  final int moveSpeed;
-  final int attackSpeed;
-  final int baseAttackTime;
+  final double moveSpeed;
+  final double attackSpeed;
+  final double baseAttackTime;
   final int respawnTime;
-  final int hpRecoveryPerSec;
-  final int spRecoveryPerSec;
+  final double hpRecoveryPerSec;
+  final double spRecoveryPerSec;
   final int maxDeployCount;
   final int maxDeckStackCnt;
   final int tauntLevel;

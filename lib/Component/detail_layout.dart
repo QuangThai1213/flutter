@@ -1,13 +1,13 @@
 import 'package:cowell/Component/summary_detail.dart';
-import 'package:cowell/Model/pokemon.dart';
+import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 import 'package:cowell/Component/summary.dart';
 import 'package:cowell/Component/separator.dart';
 
 class DetailLayout extends StatelessWidget {
-  const DetailLayout(this.pokemon, this.index);
+  const DetailLayout(this.operator, this.index);
   final int index;
-  final Pokemon pokemon;
+  final Operator operator;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,8 +57,8 @@ class DetailLayout extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.fromLTRB(0.0, 72.0, 0.0, 32.0),
         children: <Widget>[
-          PokemonSummary(
-            pokemon,
+          OperatorSummary(
+            operator,
             index,
             horizontal: false,
           ),

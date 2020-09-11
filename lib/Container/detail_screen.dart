@@ -1,10 +1,10 @@
-import 'package:cowell/Model/pokemon.dart';
+import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 import 'package:cowell/Component/detail_layout.dart';
 
 class DetailPageArgument {
   const DetailPageArgument(this.pokemon, this.index);
-  final Pokemon pokemon;
+  final Operator pokemon;
   final int index;
 }
 

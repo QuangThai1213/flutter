@@ -1,18 +1,17 @@
 import 'package:cowell/Component/item_card.dart';
-import 'package:cowell/Model/pokemon.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class GridNewsItem extends StatelessWidget {
-  const GridNewsItem(this.columnCount, this.index, this.pokemon);
+  const GridNewsItem(this.columnCount, this.index, this.operator);
 
   final int columnCount;
   final int index;
-  final Pokemon pokemon;
+  final Operator operator;
   @override
   Widget build(BuildContext context) {
-    String imageNumber = index.toString().padLeft(3, "0");
+    String image = operator.phases.last.characterPrefabKey+"_1";
     return AnimationConfiguration.staggeredGrid(
       columnCount: columnCount,
       position: index,
@@ -23,8 +22,8 @@ class GridNewsItem extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child:
-                    ItemCard(index, "assets/images/$imageNumber.png", pokemon),
+                child: ItemCard(
+                    index, "assets/img/portraits/$image.png", operator),
                 flex: 8,
               ),
             ],

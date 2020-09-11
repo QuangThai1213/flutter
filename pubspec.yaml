@@ -19,8 +19,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/data/pokedex.json
-    - assets/images/
+    - assets/img/portraits/
+    - assets/img/avatars/
     - assets/icon/
     - assets/excel/
 
