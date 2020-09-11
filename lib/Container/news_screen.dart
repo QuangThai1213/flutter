@@ -20,6 +20,7 @@ Future<List<Operator>> fetchOperator() async {
   for (final operatorData in decoded.values) {
     lstOperator.add(new Operator.fromJson(operatorData));
   }
+  lstOperator.shuffle();
   return lstOperator;
 }
 
@@ -85,6 +86,9 @@ class _NewsScreenState extends State<NewsScreen> {
         future: futureOperator,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            snapshot.data.removeWhere((element) =>
+                (element.profession == 'TOKEN') ||
+                (element.profession == 'TRAP'));
             lstOperatorName.addAll(snapshot.data.map((e) => e.name));
             if (!isFetched) {
               lstOperatorInit = snapshot.data;

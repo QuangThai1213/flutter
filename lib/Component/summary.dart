@@ -11,7 +11,6 @@ class OperatorSummary extends StatelessWidget {
   OperatorSummary.vertical(this.operator, this.index) : horizontal = false;
   @override
   Widget build(BuildContext context) {
-    String imageNumber = index.toString().padLeft(3, "0");
     String operatorType = "";
     operator.tagList.asMap().forEach((index, element) {
       if (index == 0) {
