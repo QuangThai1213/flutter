@@ -68,10 +68,10 @@ List<Widget> _tiles = const <Widget>[
 class GridLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Container(
-        child: new Padding(
+    return Container(
+        child: Padding(
             padding: const EdgeInsets.only(top: 20.0),
-            child: new StaggeredGridView.count(
+            child: StaggeredGridView.count(
               crossAxisCount: 4,
               staggeredTiles: _staggeredTiles,
               children: _tiles,
@@ -95,10 +95,11 @@ class _GridLayoutTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+    String navigation = '/news';
     final int min = 1;
     final int max = 5;
-    var rn = new Random();
-    return new Card(
+    var rn = Random();
+    return Card(
       // color: backgroundColor,
       child: Stack(
         alignment: Alignment.center,
@@ -132,15 +133,17 @@ class _GridLayoutTile extends StatelessWidget {
                     ))
                 .toList(),
           ),
-          new InkWell(
+          InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/news');
+              Navigator.pushNamed(context, navigation);
             },
-            child: new Center(
-              child: new Padding(
+            child: Container(
+              alignment: Alignment.bottomLeft,
+              child: IntrinsicHeight(
+                child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Icon(
                         iconData,
@@ -160,7 +163,9 @@ class _GridLayoutTile extends StatelessWidget {
                                   Rect.fromLTWH(60.0, 60.0, 80.0, 70.0))),
                       )
                     ],
-                  )),
+                  ),
+                ),
+              ),
             ),
           ),
         ],

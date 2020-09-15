@@ -1,5 +1,5 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:cowell/Container/Counter/View/counter_page.dart';
+import 'package:cowell/Container/Counter/index.dart';
 import 'package:cowell/Container/Home/main_screen.dart';
 import 'package:flutter/material.dart';
 

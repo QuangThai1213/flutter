@@ -1,8 +1,7 @@
 import 'package:cowell/Container/Counter/Cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'counter_view.dart';
+import 'View/counter_view.dart';
 
 /// {@template counter_page}
 /// A [StatelessWidget] which is responsible for providing a

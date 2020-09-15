@@ -6,6 +6,8 @@ import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cowell/Container/GridList/Cubit/grid_list_cubit.dart';
 
 class NewsScreen extends StatefulWidget {
   @override
@@ -29,7 +31,7 @@ class _NewsScreenState extends State<NewsScreen> {
   List<String> lstOperatorName = [];
   List<Operator> lstOperatorInit = [];
   List<Operator> lstOperatorSearch = [];
-  String title = "News";
+  String title = "List Data";
   bool isFetched = false;
   @override
   void initState() {
@@ -59,53 +61,64 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    waitForShowSearch() async {
+    waitForShowSearch(recent) async {
+      if (recent != "") {
+        addRecentSearch(recent);
+      }
       final result =
           await showSearch(context: context, delegate: Search(lstOperatorName));
       if (result != "") {
         // changeStatusTitle(result);
-        addRecentSearch(result);
         changeListData(result);
       }
+      return result;
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                // isFetched = false;
-                waitForShowSearch();
-              }),
-              
-        ],
-        title: Text(title),
-        centerTitle: true,
-      ),
-      body: FutureBuilder<List<Operator>>(
-        future: futureOperator,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            snapshot.data.removeWhere((element) =>
-                (element.profession == 'TOKEN') ||
-                (element.profession == 'TRAP'));
-            lstOperatorName.addAll(snapshot.data.map((e) => e.name));
-            if (!isFetched) {
-              lstOperatorInit = snapshot.data;
-              lstOperatorSearch = lstOperatorInit;
-              isFetched = true;
-            }
-            if (lstOperatorSearch.isNotEmpty) {
-              return GridLayoutNews(lstOperatorSearch);
-            } else {
-              return Text("Nothing Here !");
-            }
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          // By default, show a loading spinner.
-          return Center(child: SpinKitPouringHourglass(color: Colors.blue));
+    return BlocProvider(
+      create: (_) => GridListCubit(),
+      child: BlocBuilder<GridListCubit, String>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () async {
+                      // isFetched = false;
+                      String result = await waitForShowSearch(state);
+                      context.bloc<GridListCubit>().getRecent(result);
+                    }),
+              ],
+              title: Text(title),
+              centerTitle: true,
+            ),
+            body: FutureBuilder<List<Operator>>(
+              future: futureOperator,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  snapshot.data.removeWhere((element) =>
+                      (element.profession == 'TOKEN') ||
+                      (element.profession == 'TRAP'));
+                  lstOperatorName.addAll(snapshot.data.map((e) => e.name));
+                  if (!isFetched) {
+                    lstOperatorInit = snapshot.data;
+                    lstOperatorSearch = lstOperatorInit;
+                    isFetched = true;
+                  }
+                  if (lstOperatorSearch.isNotEmpty) {
+                    return GridLayoutNews(lstOperatorSearch);
+                  } else {
+                    return Text("Nothing Here !");
+                  }
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                // By default, show a loading spinner.
+                return Center(
+                    child: SpinKitPouringHourglass(color: Colors.blue));
+              },
+            ),
+          );
         },
       ),
     );

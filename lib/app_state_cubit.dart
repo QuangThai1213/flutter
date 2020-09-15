@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 class AppState extends HydratedCubit<String> {
