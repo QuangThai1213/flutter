@@ -77,7 +77,8 @@ class _NewsScreenState extends State<NewsScreen> {
               onPressed: () {
                 // isFetched = false;
                 waitForShowSearch();
-              })
+              }),
+              
         ],
         title: Text(title),
         centerTitle: true,

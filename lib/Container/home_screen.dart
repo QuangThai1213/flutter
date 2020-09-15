@@ -1,9 +1,9 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:cowell/Container/main_screen.dart';
+import 'package:cowell/Container/Counter/View/counter_page.dart';
+import 'package:cowell/Container/Home/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -39,12 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           children: <Widget>[
             MainScreen(),
-            Container(
-              color: Colors.red,
-              child: Center(
-                child: Text("Chưa phát triển"),
-              ),
-            ),
+            CounterPage(),
             Container(
               color: Colors.green,
               child: Center(
@@ -72,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.home),
               inactiveColor: Colors.grey),
           BottomNavyBarItem(
-              title: Text('????'),
+              title: Text('Counter'),
               icon: Icon(Icons.apps),
               inactiveColor: Colors.grey),
           BottomNavyBarItem(

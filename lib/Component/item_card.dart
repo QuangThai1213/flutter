@@ -1,4 +1,4 @@
-import 'package:cowell/Container/detail_screen.dart';
+import 'package:cowell/Container/Detail/detail_screen.dart';
 import 'package:cowell/Model/operator.dart';
 import 'package:flutter/material.dart';
 
