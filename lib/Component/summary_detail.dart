@@ -35,6 +35,9 @@ class _SummaryDetailState extends State<SummaryDetail> {
               },
             ),
           ),
+          Center(
+            child: Text("data"),
+          ),
         ],
       ),
     );
