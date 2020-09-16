@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cowell/app_state_cubit.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:woocommerce_api/woocommerce_api.dart';
 
 Future main() async {
   await DotEnv().load('.env');
