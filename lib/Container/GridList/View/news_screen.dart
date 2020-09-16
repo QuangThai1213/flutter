@@ -75,8 +75,8 @@ class _NewsScreenState extends State<NewsScreen> {
     }
 
     return BlocProvider(
-      create: (_) => GridListCubit(),
-      child: BlocBuilder<GridListCubit, String>(
+      create: (_) => RecentSearchCubit(),
+      child: BlocBuilder<RecentSearchCubit, String>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -86,7 +86,7 @@ class _NewsScreenState extends State<NewsScreen> {
                     onPressed: () async {
                       // isFetched = false;
                       String result = await waitForShowSearch(state);
-                      context.bloc<GridListCubit>().getRecent(result);
+                      context.bloc<RecentSearchCubit>().getRecent(result);
                     }),
               ],
               title: Text(title),

@@ -8,9 +8,11 @@ import 'package:cowell/observer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cowell/app_state_cubit.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() async {
-  // runApp(MyApp());
+Future main() async {
+  await DotEnv().load('.env');
+  print(DotEnv().env['MYKEY']);
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build();
   Bloc.observer = CounterObserver();
