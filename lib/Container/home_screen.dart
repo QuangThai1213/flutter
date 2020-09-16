@@ -1,7 +1,10 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:cowell/Container/Counter/index.dart';
 import 'package:cowell/Container/Home/main_screen.dart';
+import 'package:cowell/Model/app_state.dart';
+import 'package:cowell/app_state_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,60 +29,66 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Team 3 App"),
-        centerTitle: true,
-      ),
-      body: SizedBox.expand(
-        child: PageView(
-          controller: _pageController,
-          onPageChanged: (index) {
-            setState(() => _currentIndex = index);
-          },
-          children: <Widget>[
-            MainScreen(),
-            CounterPage(),
-            Container(
-              color: Colors.green,
-              child: Center(
-                child: Text("Chưa phát triển"),
-              ),
+    return BlocBuilder<AppStateCubit, AppState>(
+      builder: (context, state) {
+        context.bloc<AppStateCubit>().logout();
+        print(context.bloc<AppStateCubit>().getData());
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Team 3 App"),
+            centerTitle: true,
+          ),
+          body: SizedBox.expand(
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() => _currentIndex = index);
+              },
+              children: <Widget>[
+                MainScreen(),
+                CounterPage(),
+                Container(
+                  color: Colors.green,
+                  child: Center(
+                    child: Text("Chưa phát triển"),
+                  ),
+                ),
+                Container(
+                  color: Colors.blue,
+                  child: Center(
+                    child: Text("Chưa phát triển"),
+                  ),
+                ),
+              ],
             ),
-            Container(
-              color: Colors.blue,
-              child: Center(
-                child: Text("Chưa phát triển"),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavyBar(
-        selectedIndex: _currentIndex,
-        onItemSelected: (index) {
-          setState(() => _currentIndex = index);
-          _pageController.jumpToPage(index);
-        },
-        items: <BottomNavyBarItem>[
-          BottomNavyBarItem(
-              title: Text('Home'),
-              icon: Icon(Icons.home),
-              inactiveColor: Colors.grey),
-          BottomNavyBarItem(
-              title: Text('Counter'),
-              icon: Icon(Icons.apps),
-              inactiveColor: Colors.grey),
-          BottomNavyBarItem(
-              title: Text('????'),
-              icon: Icon(Icons.chat_bubble),
-              inactiveColor: Colors.grey),
-          BottomNavyBarItem(
-              title: Text('????'),
-              icon: Icon(Icons.settings),
-              inactiveColor: Colors.grey),
-        ],
-      ),
+          ),
+          bottomNavigationBar: BottomNavyBar(
+            selectedIndex: _currentIndex,
+            onItemSelected: (index) {
+              setState(() => _currentIndex = index);
+              _pageController.jumpToPage(index);
+            },
+            items: <BottomNavyBarItem>[
+              BottomNavyBarItem(
+                  title: Text('Home'),
+                  icon: Icon(Icons.home),
+                  inactiveColor: Colors.grey),
+              BottomNavyBarItem(
+                  title: Text('Counter'),
+                  icon: Icon(Icons.apps),
+                  inactiveColor: Colors.grey),
+              BottomNavyBarItem(
+                  title: Text('????'),
+                  icon: Icon(Icons.chat_bubble),
+                  inactiveColor: Colors.grey),
+              BottomNavyBarItem(
+                  title: Text('????'),
+                  icon: Icon(Icons.settings),
+                  inactiveColor: Colors.grey),
+            ],
+          ),
+        );
+      },
     );
   }
 }
