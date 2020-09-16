@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:cowell/observer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cowell/app_state_cubit.dart';
+import 'package:flare_splash_screen/flare_splash_screen.dart';
 
 void main() async {
   // runApp(MyApp());
@@ -14,6 +15,27 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build();
   Bloc.observer = CounterObserver();
   runApp(MyApp());
+}
+
+class WelcomeScreen extends StatefulWidget {
+  @override
+  _WelcomeScreenState createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  @override
+  Widget build(BuildContext context) {
+    String assetLoader = "assets/liquidLoader.flr";
+    return SplashScreen.navigate(
+      name: assetLoader,
+      next: (context) => HomeScreen(),
+      until: () => Future.delayed(Duration(seconds: 2)),
+      startAnimation: '0',
+      endAnimation: '4',
+      loopAnimation: 'Untitled',
+      backgroundColor: Colors.white,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -28,11 +50,11 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => HomeScreen(),
+          '/': (context) => WelcomeScreen(),
+          '/homes': (context) => HomeScreen(),
           '/news': (context) => NewsScreen(),
           '/detail': (context) => DetailPage()
         },
-        // home: IntroPageView(),
       ),
     );
   }

@@ -4,6 +4,7 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  flare_splash_screen: ^3.0.1
   bottom_navy_bar: ^5.4.0
   hidden_drawer_menu: ^1.1.2
   flutter_staggered_grid_view: "^0.3.2"
@@ -26,3 +27,4 @@ flutter:
     - assets/img/avatars/
     - assets/icon/
     - assets/excel/
+    - assets/liquidLoader.flr
