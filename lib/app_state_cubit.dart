@@ -1,3 +1,4 @@
+import 'package:cowell/Model/user.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:cowell/Model/app_state.dart';
 
@@ -5,15 +6,15 @@ class AppStateCubit extends HydratedCubit<AppState> {
   AppStateCubit() : super(AppState(isLogin: false));
 
   void login() {
-    AppState data = state;
-    data.isLogin = true;
-    emit(data);
+    state.user = User(name: "thai");
+    state.isLogin = true;
+    emit(state);
   }
 
   void logout() {
-    AppState data = state;
-    data.isLogin = false;
-    emit(data);
+    state.user = null;
+    state.isLogin = false;
+    emit(state);
   }
 
   getData() => state.isLogin;

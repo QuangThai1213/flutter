@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:cowell/Container/Counter/index.dart';
 import 'package:cowell/Container/Home/main_screen.dart';
 import 'package:cowell/Model/app_state.dart';
+import 'package:cowell/Model/user.dart';
 import 'package:cowell/app_state_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,8 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AppStateCubit, AppState>(
       builder: (context, state) {
-        context.bloc<AppStateCubit>().logout();
-        print(context.bloc<AppStateCubit>().getData());
+        context.bloc<AppStateCubit>().login();
+        User user = context.bloc<AppStateCubit>().state.user;
+        if (user != null) {
+          print(user.name);
+        }
         return Scaffold(
           appBar: AppBar(
             title: Text("Team 3 App"),
