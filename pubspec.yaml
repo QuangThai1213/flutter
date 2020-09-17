@@ -16,6 +16,10 @@ dependencies:
   bloc: ^6.0.0
   flutter_bloc: ^6.0.0
   hydrated_bloc: ^6.0.1
+  empty_widget: ^0.0.1-dev.1
+  sliding_up_panel: ^1.0.2
+  cached_network_image: ^2.3.2+1
+  liquid_pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -27,6 +31,9 @@ flutter:
     - assets/img/portraits/
     - assets/img/avatars/
     - assets/icon/
+    - assets/images/im_emptyIcon_2.png
+    - assets/images/dotted.png
     - assets/excel/
     - assets/liquidLoader.flr
     - .env
+    - assets/icon/atk.png

@@ -63,15 +63,22 @@ class DetailLayout extends StatelessWidget {
             horizontal: false,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 32.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  _overviewTitle,
-                  style: TextStyle(fontStyle: FontStyle.normal),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 32.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _overviewTitle,
+                        style: TextStyle(fontStyle: FontStyle.normal),
+                      ),
+                      Separator(),
+                    ],
+                  ),
                 ),
-                Separator(),
                 SummaryDetail(),
               ],
             ),

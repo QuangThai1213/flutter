@@ -1,9 +1,11 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:cowell/Container/Counter/index.dart';
+import 'package:cowell/Container/Detail/About/about.dart';
 import 'package:cowell/Container/Home/main_screen.dart';
 import 'package:cowell/Model/app_state.dart';
 import 'package:cowell/Model/user.dart';
 import 'package:cowell/app_state_cubit.dart';
+import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,18 +53,21 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 MainScreen(),
                 CounterPage(),
-                Container(
-                  color: Colors.green,
-                  child: Center(
-                    child: Text("Chưa phát triển"),
-                  ),
-                ),
-                Container(
-                  color: Colors.blue,
-                  child: Center(
-                    child: Text("Chưa phát triển"),
-                  ),
-                ),
+                EmptyListWidget(
+                    title: 'Nothing Here',
+                    subTitle: 'Nothing available yet',
+                    image: 'assets/images/im_emptyIcon_2.png',
+                    titleTextStyle: Theme.of(context)
+                        .typography
+                        .dense
+                        .headline3
+                        .copyWith(color: Color(0xff9da9c7)),
+                    subtitleTextStyle: Theme.of(context)
+                        .typography
+                        .dense
+                        .bodyText2
+                        .copyWith(color: Color(0xffabb8d6))),
+                PokemonDetailPage(name: "Thai",)
               ],
             ),
           ),
