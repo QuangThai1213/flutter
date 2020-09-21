@@ -4,8 +4,8 @@ import 'package:cowell/Component/detail_layout.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 
 class DetailPageArgument {
-  const DetailPageArgument(this.pokemon, this.index);
-  final Operator pokemon;
+  const DetailPageArgument(this.operator, this.index);
+  final Operator operator;
   final int index;
 }
 
@@ -33,7 +33,7 @@ class DetailPage extends StatelessWidget {
           animSpeedFactor: 2.0,
           showChildOpacityTransition: true,
           onRefresh: _handleRefresh, // refresh callback
-          child: DetailLayout(args.pokemon, args.index), // scroll view
+          child: DetailLayout(args.operator, args.index), // scroll view
         ),
       ),
     );

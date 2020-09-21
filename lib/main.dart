@@ -10,7 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cowell/app_state_cubit.dart';
 import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 Future main() async {
   await DotEnv().load('.env');
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,29 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    // return WaveWidget(
+    //   config: CustomConfig(
+    //     gradients: [
+    //       [Colors.red, Color(0xEEB4E698)],
+    //       // [Colors.red[800], Color(0x77FF7474)],
+    //       // [Colors.orange, Color(0x66FF9800)],
+    //       // [Colors.yellow, Color(0x55FFEB3B)]
+    //     ],
+    //     durations: [ 600],
+    //     heightPercentages: [0.6],
+    //     blur: MaskFilter.blur(BlurStyle.outer,999),
+    //     gradientBegin: Alignment.bottomLeft,
+    //     gradientEnd: Alignment.topRight,
+    //   ),
+    //   backgroundColor: Colors.white,
+    //   // backgroundImage: DecorationImage(
+    //   //   image: NetworkImage(
+    //   //     'https://images.unsplash.com/photo-1600107363560-a2a891080c31?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=672&q=80',
+    //   //   ),
+    //   // ),
+    //   size: Size(double.infinity, double.infinity),
+    //   waveAmplitude: 0,
+    // );
     String assetLoader = "assets/liquidLoader.flr";
     return SplashScreen.navigate(
       name: assetLoader,
