@@ -21,6 +21,8 @@ dependencies:
   cached_network_image: ^2.3.2+1
   liquid_pull_to_refresh: ^2.0.0
   wave: ^0.1.0
+  intl: ^0.16.1
+  global_configuration: ^1.6.0
 
 dev_dependencies:
   flutter_test:

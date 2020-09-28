@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:cowell/Container/Counter/index.dart';
 import 'package:cowell/Container/Detail/About/about.dart';
 import 'package:cowell/Container/Home/main_screen.dart';
+import 'package:cowell/Container/Setting/index.dart';
 import 'package:cowell/Model/app_state.dart';
 import 'package:cowell/Model/user.dart';
 import 'package:cowell/app_state_cubit.dart';
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return Scaffold(
           appBar: AppBar(
-            title: Text("Team 3 App"),
+            title: Text("App Title"),
             centerTitle: true,
           ),
           body: SizedBox.expand(
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         .dense
                         .bodyText2
                         .copyWith(color: Color(0xffabb8d6))),
-                PokemonDetailPage(name: "Thai",)
+                SettingScreen(),
               ],
             ),
           ),
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.chat_bubble),
                   inactiveColor: Colors.grey),
               BottomNavyBarItem(
-                  title: Text('????'),
+                  title: Text('Setting'),
                   icon: Icon(Icons.settings),
                   inactiveColor: Colors.grey),
             ],

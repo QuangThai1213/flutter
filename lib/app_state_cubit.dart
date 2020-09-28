@@ -3,7 +3,14 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:cowell/Model/app_state.dart';
 
 class AppStateCubit extends HydratedCubit<AppState> {
-  AppStateCubit() : super(AppState(isLogin: false));
+  AppStateCubit()
+      : super(AppState(
+          isLogin: false,
+          isLoading: true,
+        ));
+  void setLoading(bool checkLoading) {
+    state.isLoading = checkLoading;
+  }
 
   void login() {
     state.user = User(name: "thai");

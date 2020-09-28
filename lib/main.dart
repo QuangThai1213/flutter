@@ -1,8 +1,12 @@
+import 'package:cowell/Common/app_config.dart';
+import 'package:cowell/Connection/magento_connection.dart';
 import 'package:cowell/Container/Detail/detail_screen.dart';
+import 'package:cowell/Container/Login/login_view.dart';
 import 'package:cowell/Container/home_screen.dart';
 import 'package:cowell/Container/GridList/View/news_screen.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cowell/Model/app_state.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:cowell/observer.dart';
@@ -12,8 +16,16 @@ import 'package:flare_splash_screen/flare_splash_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+import 'Model/response.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
+
 Future main() async {
   await DotEnv().load('.env');
+  GlobalConfiguration().loadFromMap(appSettings);
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build();
   Bloc.observer = CounterObserver();
@@ -67,6 +79,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    getProductData(
+      {
+        'searchCriteria[filter_groups][0][filters][0][field]': 'category_id',
+        'searchCriteria[filter_groups][0][filters][0][value]': 3,
+      },
+    ).then((value) => {
+          value.items.forEach((element) {
+            element.attributeSetId
+                .then((value) => print(value.attributeSetName));
+          })
+        });
     return BlocProvider(
       create: (_) => AppStateCubit(),
       child: MaterialApp(
@@ -80,6 +103,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         routes: {
+          '/login': (context) => LoginScreen(),
           '/loader': (context) => WelcomeScreen(),
           '/homes': (context) => HomeScreen(),
           '/news': (context) => NewsScreen(),
